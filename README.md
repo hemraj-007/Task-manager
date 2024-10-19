@@ -40,13 +40,13 @@ Make sure you have the following installed on your local machine:
 
 2. Install the dependencies:
 
-```bash
-npm install
+    ```bash
+    npm install
 
 3. Start the deployment server
 
-```bash
-npm run dev
+   ```bash
+   npm run dev
 
 ## Usage
 
@@ -69,11 +69,3 @@ On the home page, click the **Get Started** button to navigate to the task manag
 
 - Implement a backend with a database for persistent task storage.
 - Add user authentication to manage personal task lists.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-For any queries, please contact [your-email@example.com].
