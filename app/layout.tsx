@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Link from "next/link";
+import { Navbar } from "./components/navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,11 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <Navbar />
+        <main className="flex-grow container mx-auto px-4 py-8">{children}</main>
+
+        <footer className="bg-slate-600 text-white py-6 mt-auto">
+          <div className="container mx-auto text-center px-4">
+            <p>&copy; 2024 Task Manager. All rights reserved.</p>
+          </div>
+        </footer>
       </body>
     </html>
   );
