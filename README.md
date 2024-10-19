@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Manager Application
+
+This is a simple Task Manager application built with Next.js and TypeScript. It allows users to create, display, edit, delete, and filter tasks using local storage for persistence.
+
+## Features
+
+- **Home Page**: The landing page with a "Get Started" button that redirects to the main task management table.
+- **Task Management**: On the task page, you can:
+  - **Create** new tasks via a modal form.
+  - **Edit** tasks inline using the "Edit" button.
+  - **Delete** tasks from the table.
+  - **Mark tasks** as completed or pending.
+  - **Sort** tasks by priority using a button.
+  - **Reset** tasks back to the original order after sorting.
+  - **Filter** tasks by clicking on any table row to view task details.
+
+## Technologies Used
+
+- **Next.js**: Framework for server-side rendering and static site generation.
+- **TypeScript**: Strongly-typed language for better code quality and development experience.
+- **TailwindCSS**: Utility-first CSS framework for styling the application.
+- **Local Storage**: Used to store and retrieve tasks so they persist across page reloads.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Make sure you have the following installed on your local machine:
+
+- **Node.js**: v14 or later
+- **npm** or **yarn**
+
+### Installation
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/your-username/task-manager-app.git
+   cd task-manager-app
+
+2. Install the dependencies:
+
+```bash
+npm install
+
+3. Start the deployment server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Home Page:
+On the home page, click the **Get Started** button to navigate to the task management table.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Task Table:
+- You can create new tasks by clicking the **Create Task** button.
+- Each task can be **edited** or **deleted**.
+- You can mark tasks as **completed** or **pending**.
+- The table allows you to **sort tasks by priority**.
+- You can **reset the task order** after sorting using the reset button.
+- Clicking on a task row will take you to a detailed view of the task.
 
-## Learn More
+## Known Issues
 
-To learn more about Next.js, take a look at the following resources:
+- The task data is stored in **local storage**, so it is limited to your browser. Once you clear the cache or switch browsers, the tasks will be lost.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Enhancements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Implement a backend with a database for persistent task storage.
+- Add user authentication to manage personal task lists.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contact
+
+For any queries, please contact [your-email@example.com].
