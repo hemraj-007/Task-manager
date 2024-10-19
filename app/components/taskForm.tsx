@@ -1,23 +1,23 @@
 'use client'
-import { useState } from 'react';
-
+import { useState } from "react";
 interface TaskFormProps {
   onAdd: (newTask: any) => void;
+  task?: any; // Optional task prop for editing
 }
 
-export default function TaskForm({ onAdd }: TaskFormProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [priority, setPriority] = useState('low');
+export default function TaskForm({ onAdd, task }: TaskFormProps) {
+  const [title, setTitle] = useState(task ? task.title : ''); // Pre-fill if task exists
+  const [description, setDescription] = useState(task ? task.description : ''); // Pre-fill if task exists
+  const [priority, setPriority] = useState(task ? task.priority : 'low'); // Pre-fill if task exists
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newTask = {
-      id: Date.now(),
+      id: task ? task.id : Date.now(), // Keep the same ID if editing
       title,
       description,
       priority,
-      completed: false,
+      completed: task ? task.completed : false, // Preserve completed state if editing
     };
     onAdd(newTask);
     setTitle('');
@@ -62,7 +62,7 @@ export default function TaskForm({ onAdd }: TaskFormProps) {
         type="submit"
         className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
       >
-        Add Task
+        {task ? 'Update Task' : 'Add Task'}
       </button>
     </form>
   );

@@ -9,20 +9,25 @@ export default function Home() {
     const defaultTasks = [
         { id: 1, title: 'Sample Task 1', description: 'Task description', priority: 'high', completed: false },
         { id: 2, title: 'Sample Task 2', description: 'Another task description', priority: 'medium', completed: false },
-        { id: 3, title: 'Complete React Project', description: 'Finish React project with all features.', priority: 'high', completed: false }
+        { id: 3, title: 'Complete React Project', description: 'Finish React project with all features.', priority: 'high', completed: false },
+        { id: 4, title: 'Write Documentation', description: 'Complete the project documentation.', priority: 'low', completed: false },
     ];
 
-    // State to manage tasks and modal visibility
+    // State to manage tasks, modal visibility, original tasks, and sorting state
     const [tasks, setTasks] = useState<any[]>([]);
+    const [originalTasks, setOriginalTasks] = useState<any[]>([]); // Store original task order
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Load tasks from local storage or set default tasks if local storage is empty
     useEffect(() => {
         const savedTasks = localStorage.getItem('tasks');
         if (savedTasks) {
-            setTasks(JSON.parse(savedTasks)); // Load saved tasks from local storage
+            const parsedTasks = JSON.parse(savedTasks);
+            setTasks(parsedTasks); // Load saved tasks from local storage
+            setOriginalTasks(parsedTasks); // Save the original order of tasks
         } else {
             setTasks(defaultTasks); // If no tasks in local storage, use default tasks
+            setOriginalTasks(defaultTasks); // Save the default task order
         }
     }, []);
 
@@ -36,7 +41,17 @@ export default function Home() {
     // Add new task to the task list
     const addTask = (newTask: any) => {
         setTasks([...tasks, newTask]);
+        setOriginalTasks([...tasks, newTask]); // Update original task list
         setIsModalOpen(false); // Close modal after task creation
+    };
+
+    // Sort tasks by priority when the button is clicked
+    const handleSortTasks = () => {
+        const sortedTasks = [...tasks].sort((a, b) => {
+            const priorityOrder: { [key: string]: number } = { high: 3, medium: 2, low: 1 };
+            return priorityOrder[b.priority] - priorityOrder[a.priority];
+        });
+        setTasks(sortedTasks);
     };
 
     return (
@@ -44,9 +59,17 @@ export default function Home() {
             {/* Button to open the modal */}
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded mb-4"
+                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded mb-4 mr-4"
             >
                 Create Task
+            </button>
+
+            {/* Button to sort tasks by priority */}
+            <button
+                onClick={handleSortTasks}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mr-4"
+            >
+                Sort by Priority
             </button>
 
             {/* Modal for creating a task */}
