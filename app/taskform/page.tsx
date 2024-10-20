@@ -4,44 +4,48 @@ import TaskForm from '../components/taskForm';
 import TaskList from '../components/taskList';
 import Modal from '../components/model';
 
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    priority: 'high' | 'medium' | 'low';
+    completed: boolean;
+}
+
 export default function Home() {
-    // Default tasks to be shown initially if local storage is empty
-    const defaultTasks = [
+    // Memoized default tasks to prevent unnecessary re-renders
+    const defaultTasks: Task[] = [
         { id: 1, title: 'Sample Task 1', description: 'Task description', priority: 'high', completed: false },
         { id: 2, title: 'Sample Task 2', description: 'Another task description', priority: 'medium', completed: false },
         { id: 3, title: 'Complete React Project', description: 'Finish React project with all features.', priority: 'high', completed: false },
         { id: 4, title: 'Write Documentation', description: 'Complete the project documentation.', priority: 'low', completed: false },
     ];
 
-    // State to manage tasks, modal visibility, original tasks, and sorting state
-    const [tasks, setTasks] = useState<any[]>([]);
-    const [originalTasks, setOriginalTasks] = useState<any[]>([]); // Store original task order
+    // State to manage tasks and modal visibility
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Load tasks from local storage or set default tasks if local storage is empty
     useEffect(() => {
         const savedTasks = localStorage.getItem('tasks');
         if (savedTasks) {
-            const parsedTasks = JSON.parse(savedTasks);
+            const parsedTasks: Task[] = JSON.parse(savedTasks);
             setTasks(parsedTasks); // Load saved tasks from local storage
-            setOriginalTasks(parsedTasks); // Save the original order of tasks
         } else {
             setTasks(defaultTasks); // If no tasks in local storage, use default tasks
-            setOriginalTasks(defaultTasks); // Save the default task order
         }
-    }, []);
+    }, []); // Removed dependencies to avoid infinite loop
 
     // Update local storage whenever tasks change
     useEffect(() => {
         if (tasks.length > 0) {
             localStorage.setItem('tasks', JSON.stringify(tasks)); // Save tasks to local storage
         }
-    }, [tasks]);
+    }, [tasks]); // Only run this effect when 'tasks' changes
 
     // Add new task to the task list
-    const addTask = (newTask: any) => {
-        setTasks([...tasks, newTask]);
-        setOriginalTasks([...tasks, newTask]); // Update original task list
+    const addTask = (newTask: Task) => {
+        setTasks((prevTasks) => [...prevTasks, newTask]);
         setIsModalOpen(false); // Close modal after task creation
     };
 
@@ -67,7 +71,7 @@ export default function Home() {
             {/* Button to sort tasks by priority */}
             <button
                 onClick={handleSortTasks}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 mr-4"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
             >
                 Sort by Priority
             </button>
@@ -79,16 +83,16 @@ export default function Home() {
                 </Modal>
             )}
 
-            {/* Table for displaying tasks */}
+            {/* Responsive Table for displaying tasks */}
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white border border-gray-200">
                     <thead>
                         <tr className="bg-gray-200 text-gray-700">
-                            <th className="py-2 px-4 border-b">Title</th>
-                            <th className="py-2 px-4 border-b">Description</th>
-                            <th className="py-2 px-4 border-b">Priority</th>
-                            <th className="py-2 px-4 border-b">Status</th>
-                            <th className="py-2 px-4 border-b">Actions</th>
+                            <th className="py-2 px-4 border-b text-left">Title</th>
+                            <th className="py-2 px-4 border-b text-left">Description</th>
+                            <th className="py-2 px-4 border-b text-left">Priority</th>
+                            <th className="py-2 px-4 border-b text-left">Status</th>
+                            <th className="py-2 px-4 border-b text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody>

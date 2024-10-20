@@ -1,18 +1,26 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import Modal from './model'; // Assuming you already have a Modal component
-import TaskForm from './taskForm'; // Assuming you have a TaskForm component for adding/editing tasks
+import Modal from './model';
+import TaskForm from './taskForm';
 import { useRouter } from 'next/navigation';
 
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    priority: 'high' | 'medium' | 'low';
+    completed: boolean;
+}
+
 interface TaskListProps {
-    tasks: any[];
-    setTasks: (tasks: any[]) => void;
+    tasks: Task[];
+    setTasks: (tasks: Task[]) => void;
 }
 
 export default function TaskList({ tasks, setTasks }: TaskListProps) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [taskToEdit, setTaskToEdit] = useState<any>(null);
+    const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
     const router = useRouter();
 
     // Delete task
@@ -30,23 +38,30 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
     };
 
     // Open modal to edit task
-    const handleEditTask = (task: any) => {
-        setTaskToEdit(task); // Set the task to edit
-        setIsEditModalOpen(true); // Open the modal
+    const handleEditTask = (task: Task) => {
+        setTaskToEdit(task);
+        setIsEditModalOpen(true);
     };
 
     // Update the task after editing
-    const handleUpdateTask = (updatedTask: any) => {
+    const handleUpdateTask = (updatedTask: Task) => {
         const updatedTasks = tasks.map((task) =>
             task.id === updatedTask.id ? updatedTask : task
         );
-        setTasks(updatedTasks); // Update the task list
-        setIsEditModalOpen(false); // Close the modal
+        setTasks(updatedTasks);
+        setIsEditModalOpen(false);
     };
 
     // Handle row click to navigate to the task details page
     const handleRowClick = (taskId: number) => {
         router.push(`/task/${taskId}`);
+    };
+
+    // Function to get chip color based on priority
+    const getPriorityChipStyles = (priority: string) => {
+        if (priority === 'high') return 'bg-red-500 text-white';
+        if (priority === 'medium') return 'bg-yellow-500 text-black';
+        return 'bg-green-500 text-white';
     };
 
     return (
@@ -63,7 +78,13 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
                         </Link>
                     </td>
                     <td className="border px-4 py-2">{task.description}</td>
-                    <td className="border px-4 py-2">{task.priority}</td>
+                    <td className="border px-4 py-2">
+                        <span
+                            className={`px-2 py-1 rounded-full text-xs font-semibold ${getPriorityChipStyles(task.priority)}`}
+                        >
+                            {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                        </span>
+                    </td>
                     <td className="border px-4 py-2">
                         <span
                             className={`px-2 py-1 rounded-full text-xs font-semibold ${task.completed ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
