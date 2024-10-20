@@ -28,15 +28,15 @@ In the task table, tasks are sorted by priority using the following approach:
 
 ### Sorting Example in Code
 
-```tsx
-const handleSortTasks = () => {
-    const sortedTasks = [...tasks].sort((a, b) => {
-        
-        const priorityOrder: { [key: string]: number } = { high: 3, medium: 2, low: 1 };
-        return priorityOrder[b.priority] - priorityOrder[a.priority]; 
-    });
-    setTasks(sortedTasks); 
-};
+   ```tsx
+   const handleSortTasks = () => {
+       const sortedTasks = [...tasks].sort((a, b) => {
+           
+           const priorityOrder: { [key: string]: number } = { high: 3, medium: 2, low: 1 };
+           return priorityOrder[b.priority] - priorityOrder[a.priority]; 
+       });
+       setTasks(sortedTasks); 
+   };
 
 
 ## Technologies Used
