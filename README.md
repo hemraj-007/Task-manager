@@ -14,6 +14,31 @@ This is a simple Task Manager application built with Next.js and TypeScript. It 
   - **Reset** tasks back to the original order after sorting.
   - **Filter** tasks by clicking on any table row to view task details.
 
+## Approach for Sorting by Priority
+
+In the task table, tasks are sorted by priority using the following approach:
+
+1. A **"Sort by Priority"** button triggers the sorting functionality.
+2. Tasks have three priority levels: `high`, `medium`, and `low`.
+3. When sorting is triggered, tasks are rearranged in the following order:
+   - High priority tasks appear first.
+   - Medium priority tasks appear next.
+   - Low priority tasks appear last.
+4. This is achieved by assigning numeric values to each priority (e.g., `high = 3`, `medium = 2`, and `low = 1`) and using JavaScript’s `sort()` function to rearrange the tasks.
+
+### Sorting Example in Code
+
+```tsx
+const handleSortTasks = () => {
+    const sortedTasks = [...tasks].sort((a, b) => {
+        
+        const priorityOrder: { [key: string]: number } = { high: 3, medium: 2, low: 1 };
+        return priorityOrder[b.priority] - priorityOrder[a.priority]; 
+    });
+    setTasks(sortedTasks); 
+};
+
+
 ## Technologies Used
 
 - **Next.js**: Framework for server-side rendering and static site generation.
