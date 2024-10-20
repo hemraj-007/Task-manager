@@ -28,8 +28,8 @@ In the task table, tasks are sorted by priority using the following approach:
 
 ### Sorting Example in Code
 
-   ```tsx
-   const handleSortTasks = () => {
+       ```tsx
+       const handleSortTasks = () => {
        const sortedTasks = [...tasks].sort((a, b) => {
            
            const priorityOrder: { [key: string]: number } = { high: 3, medium: 2, low: 1 };
